@@ -4,7 +4,7 @@
 <div align="center" ><img alt="Logo Uollet" width="1200"  height="250" src="./src/assets/uollet.svg"></div>
 
 <h2>Descrição</h2>
-<p>Uollet é um projeto desenvolvido totalmente por mim (e desenhado por <a>Bianca</a>) em React Native.<br>
+<p>Uollet é um projeto desenvolvido totalmente por mim (e desenhado por <a href="https://www.linkedin.com/search/results/all/?keywords=bianca%20bicalho&origin=RICH_QUERY_SUGGESTION&position=0&searchId=164792c1-ce6b-4509-8a59-f96950795146&sid=mMP">Bianca</a>) em React Native.<br>
 Este é meu primeiro projeto pessoal nessa tecnologia, e sua proposta é simular uma plataforma de criptomoedas. O prazo de desenvolvimento é de 2 semanas.</p>
 
 <h2>Objetivos</h2>
