@@ -1,5 +1,3 @@
-const criptos = [
-  'bitcoin',
-  'ethereum',
-  'ripple'
-];
+const criptos = 'bitcoin, ethereum, ripple, chiliz';
+
+export default criptos;
