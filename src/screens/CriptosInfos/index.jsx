@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { VictoryLine, VictoryChart, VictoryTheme } from "victory-native";
 import { useTheme } from 'styled-components';
+import { ActivityIndicator } from 'react-native';
 import ButtonCriptoCard from '../../components/ButtonCriptoCard';
-import LogoSvg from '../../assets/logo.svg';
 import {
   Container,
   Icon,
@@ -10,6 +10,8 @@ import {
   Title,
   TitleText,
   ContainerList,
+  ContainerChartPadding,
+  LoadingContainer,
   TransactionList,
 } from './styles';
 import apiCoinGecko from '../../services/coinGecko';
@@ -20,12 +22,16 @@ export default function CriptosInfos() {
   const [coins, setCoins] = useState([]);
   const [selectedCrypto, setSelectedCrypto] = useState({});
   const [dataChart, setDataChart] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); 
 
   function formattedDataChart(data) {
     const formattedData = data.map((dt) => {
       return (
         {
-          x: dt[0],
+          x: Intl.DateTimeFormat('pt-BR', {
+            day: '2-digit',
+            month: '2-digit'
+          }).format(dt[0]),
           y: dt[1]
         }
       );
@@ -43,7 +49,7 @@ export default function CriptosInfos() {
       }).then(res => {
         setCoins(res.data);
         setSelectedCrypto(res.data[0]);
-        console.log(res.data[0]);
+        setIsLoading(false);
       })
       .catch(err => console.log(err))
     }
@@ -61,7 +67,10 @@ export default function CriptosInfos() {
           days: '7',
           interval: 'daily'
         }
-      }).then(res => setDataChart(formattedDataChart(res.data.prices)))
+      }).then(res => {
+        setDataChart(formattedDataChart(res.data.prices))
+        setIsLoading(false);
+      })
       .catch(err => console.log(err))
     }
     fetchDataChart();
@@ -71,33 +80,42 @@ export default function CriptosInfos() {
     <Container>
         <ChartContainer>
           {
-            coins.length > 0 && 
+            coins.length > 0 && selectedCrypto.current_price !== undefined &&
             <Title>
               <Icon source={{ uri: selectedCrypto.image }}/>
               <TitleText>{
-                  selectedCrypto.current_price.toLocaleString('pt-BR', {
+                  Number(selectedCrypto.current_price).toLocaleString('pt-BR', {
                   style: 'currency',
                   currency: 'BRL'
                 })
               }</TitleText>
-            </Title>
+            </Title> 
           }
-          <VictoryChart
-            theme={VictoryTheme.material}
-          > 
-            <VictoryLine
-              style={{
-                data: { 
-                  stroke: selectedCrypto.market_cap_change_percentage_24h >= 0 ? 
-                  theme.colors.green : 
-                  theme.colors.red, 
-                  strokeWidth: 5, 
-                },
-                parent: { border: "1px solid #ccc"}
-              }}
-              data={dataChart}
-            />
-          </VictoryChart>
+          {
+            !isLoading ?
+            <ContainerChartPadding>
+              <VictoryChart
+                theme={VictoryTheme.material}
+              > 
+                <VictoryLine
+                  style={{
+                    data: { 
+                      stroke: selectedCrypto.market_cap_change_percentage_24h >= 0 ? 
+                      theme.colors.green : 
+                      theme.colors.red, 
+                      strokeWidth: 5, 
+                    },
+                    parent: { border: "1px solid #ccc"},
+          
+                  }}
+                  data={dataChart}
+                />
+              </VictoryChart>
+            </ContainerChartPadding> :
+            <LoadingContainer>
+              <ActivityIndicator size="large" color={theme.colors.primary}/>
+            </LoadingContainer>
+          }
         </ChartContainer>
         <ContainerList>
           {
@@ -109,6 +127,8 @@ export default function CriptosInfos() {
                 data={item}
                 select={item.id === selectedCrypto.id} 
                 setSelectedCrypto={setSelectedCrypto}
+                setIsLoading={setIsLoading}
+                selectedCrypto={selectedCrypto}
               />}
             />  
           }

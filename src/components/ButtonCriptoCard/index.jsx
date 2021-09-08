@@ -11,12 +11,19 @@ import {
   Div
 } from './styles';
 
-export default function ButtonCriptoCard({ data, select, setSelectedCrypto }) {
-  let deviceWidth = Dimensions.get('window').width
+export default function ButtonCriptoCard({ data, select, setSelectedCrypto, setIsLoading, selectedCrypto }) {
+  let deviceWidth = Dimensions.get('window').width;
+
+  function handleChangeSelectedCripto() {
+    if(selectedCrypto === data)
+      return;
+    setSelectedCrypto(data);
+    setIsLoading(true);
+  }
 
   return (
     <Container>
-      <Button select={select} onPress={() => setSelectedCrypto(data)} >
+      <Button select={select} onPress={handleChangeSelectedCripto} >
         <PhotoCoin source={{ uri: data.image }}/>
         <Title>{data.name}</Title>
         <PriceContainer>

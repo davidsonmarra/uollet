@@ -30,6 +30,15 @@ export const ChartContainer = styled.View`
   align-items: center;
 `;
 
+export const ContainerChartPadding = styled.View`
+  padding-left: 20px;
+`;
+
+export const LoadingContainer = styled.View`
+  justify-content: center;
+  align-items: center;
+  height: 50%;
+`;
 
 export const ContainerList = styled.View`
   padding: 0 25px;
