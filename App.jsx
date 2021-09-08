@@ -11,8 +11,8 @@ import {
 } from '@expo-google-fonts/poppins'
 import theme from './src/global/styles/theme';
 import React from 'react';
-import Home from './src/screens/Home';
-import CriptosInfos from './src/screens/CriptosInfos';
+import { NavigationContainer } from '@react-navigation/native';
+import AppRoutes from './src/routes/app.routes'
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -26,7 +26,9 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <CriptosInfos />
+      <NavigationContainer>
+        <AppRoutes />
+      </NavigationContainer>
     </ThemeProvider>
   );
 }

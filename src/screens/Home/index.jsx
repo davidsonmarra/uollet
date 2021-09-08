@@ -12,9 +12,6 @@ import {
   ContainerUserTransactions,
   TransactionList
 } from './styles';
-// import apiCoinGecko from '../../services/coinGecko';
-// import criptos from '../../utils/criptos';
-// import { FlatList } from 'react-native';
 
 export default function Home() {
   // const [coins, setCoins] = useState([]);
@@ -67,6 +64,9 @@ export default function Home() {
           amount="R$ 3.000,00"
         />
       </ContainerUserTransactions>
+      <TransactionList>
+
+      </TransactionList>
       {/* {
         coins.length > 0 &&
         <TransactionList 

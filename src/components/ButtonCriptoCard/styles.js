@@ -1,13 +1,13 @@
 import styled from 'styled-components/native';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { RectButton } from 'react-native-gesture-handler';
+import { BaseButton } from 'react-native-gesture-handler';
 import { RFValue, RFPercentage } from 'react-native-responsive-fontsize';
 
 export const Container = styled.View`
   position: relative;
 `;
 
-export const Button = styled(RectButton).attrs({
+export const Button = styled(BaseButton).attrs({
   rippleColor: '#FFFFFF11'
 })`
   width: 100%;
@@ -40,6 +40,12 @@ export const IconCaret = styled(FontAwesome5)`
   margin-right: 5px;
   color: ${({ theme, value }) => value >= 0 ? theme.colors.green : theme.colors.red};
 `;
+
+export const CurentValue = styled.Text`
+  color: ${({ theme }) => theme.colors.text_light};
+  font-family: ${({ theme }) => theme.fonts.regular};
+
+`; 
 
 export const Price = styled.Text`
   font-family: ${({ theme }) => theme.fonts.medium};

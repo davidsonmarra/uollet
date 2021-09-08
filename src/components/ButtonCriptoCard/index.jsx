@@ -7,6 +7,7 @@ import {
   Title,
   PriceContainer,
   Price,
+  CurentValue,
   IconCaret,
   Div
 } from './styles';
@@ -26,10 +27,19 @@ export default function ButtonCriptoCard({ data, select, setSelectedCrypto, setI
       <Button select={select} onPress={handleChangeSelectedCripto} >
         <PhotoCoin source={{ uri: data.image }}/>
         <Title>{data.name}</Title>
+        <CurentValue >
+          {
+            Number(data.current_price).toLocaleString('pt-BR', {
+              style: 'currency',
+              currency: 'BRL'
+            })
+          }
+        </CurentValue>
         <PriceContainer>
           <IconCaret 
             value={data.market_cap_change_percentage_24h}
-            name={data.market_cap_change_percentage_24h >= 0 ? "caret-up" : "caret-down"}/>
+            name={data.market_cap_change_percentage_24h >= 0 ? "caret-up" : "caret-down"}
+          />
           <Price 
             value={data.market_cap_change_percentage_24h}>
             {data.market_cap_change_percentage_24h.toFixed(2)} %
