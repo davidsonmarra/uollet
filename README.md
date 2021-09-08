@@ -1,7 +1,7 @@
 ![React Native](https://img.shields.io/badge/react_native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 <img src="https://img.shields.io/badge/Expo-1B1F23?style=for-the-badge&logo=expo&logoColor=white">
 
-<div align="center" ><img alt="Logo Uollet" width="1200"  height="250" src="./src/assets/uollet.svg"></div>
+<div align="center" ><img alt="Logo Uollet" width="1000"  height="200" src="./src/assets/uollet-logo.svg"></div>
 
 <h2>Descrição</h2>
 <p>Uollet é um projeto desenvolvido totalmente por mim (e desenhado por <a href="https://www.linkedin.com/search/results/all/?keywords=bianca%20bicalho&origin=RICH_QUERY_SUGGESTION&position=0&searchId=164792c1-ce6b-4509-8a59-f96950795146&sid=mMP">Bianca</a>) em React Native.<br>
