@@ -9,6 +9,7 @@ import { SimpleLineIcons, Ionicons  } from '@expo/vector-icons';
 const { Navigator, Screen } = createBottomTabNavigator();
 import criptosReducer from '../reducers/criptosReducer';
 import selectedCriptoReducer from '../reducers/selectedCriptoReducer';
+import transactionsReducer from '../reducers/transactionsReducer';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 
@@ -17,7 +18,8 @@ export default function AppRoutes() {
 
   const allReducers = combineReducers({
     criptos: criptosReducer,
-    selectedCrypto: selectedCriptoReducer
+    selectedCrypto: selectedCriptoReducer,
+    transactions: transactionsReducer
   });
   const store = createStore(allReducers);
 

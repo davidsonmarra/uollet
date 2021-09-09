@@ -9,7 +9,7 @@ import {
 } from './styles';
 
 const text = {
-  total: 'Balanço',
+  total: 'Financeiro',
   purchases: 'Compras',
   sales: 'Vendas'
 }

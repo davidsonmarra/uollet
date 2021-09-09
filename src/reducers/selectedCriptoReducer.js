@@ -1,4 +1,4 @@
-export default function criptoReducer(state = {}, action) {
+export default function selectedCriptoReducer(state = {}, action) {
   switch(action.type) {
     case 'SET_SELECTED':
       return action.payload;

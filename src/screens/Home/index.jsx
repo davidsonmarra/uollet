@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import TransactionsCard from '../../components/TransactionsCard';
+import SingleTransactionCard from '../../components/SingleTransactionCard';
 // import TransactionCriptoCard from '../../components/TransactionCriptoCard';
 import {
   Container,
@@ -12,8 +13,47 @@ import {
   ContainerUserTransactions,
   TransactionList
 } from './styles';
+import { useSelector, useDispatch } from 'react-redux';
 
 export default function Home() {
+  const transactions = useSelector((state) => state.transactions)
+  const dispatch = useDispatch();
+  const [teste, setTeste] = useState([
+    {
+      cryptoId: "ripple",
+      cryptoName: 'Ripple',
+      cryptoSymbol: "xrp",
+      date: "09/09",
+      img: "https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png?1605778731",
+      priceBrl: "200",
+      priceCrypto: "33.44481605",
+      type: "purchase"
+    },
+    {
+      cryptoId: "litecoin",
+      cryptoName: 'Litecoin',
+      cryptoSymbol: "ltc",
+      date: "09/09",
+      img: "https://assets.coingecko.com/coins/images/2/large/litecoin.png?1547033580",
+      priceBrl: "350",
+      priceCrypto: "0.35195688",
+      type: "sell"
+    },
+    {
+      cryptoId: "chiliz",
+      cryptoName: 'chiliz',
+      cryptoSymbol: "chz",
+      date: "09/09",
+      img: "https://assets.coingecko.com/coins/images/8834/large/Chiliz.png?1561970540",
+      priceBrl: "100",
+      priceCrypto: "53.76344086",
+      type: "sell",
+    }
+  ]);
+
+  useEffect(() => {
+    console.log(transactions)
+  }, [transactions])
   // const [coins, setCoins] = useState([]);
 
 
@@ -64,16 +104,12 @@ export default function Home() {
           amount="R$ 3.000,00"
         />
       </ContainerUserTransactions>
-      <TransactionList>
-
-      </TransactionList>
-      {/* {
-        coins.length > 0 &&
-        <TransactionList 
-          data={coins}
-          renderItem={({ item }) => <TransactionCriptoCard data={item} />}
-        />  
-      } */}
+      <TransactionList 
+        data={transactions}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item }) => <SingleTransactionCard item={item} />}
+        keyExtractor={(item) => item.priceCrypto}
+      />
     </Container>
   );
 }

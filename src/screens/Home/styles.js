@@ -55,6 +55,5 @@ export const ContainerUserTransactions = styled.ScrollView.attrs({
 
 export const TransactionList = styled.FlatList`
   margin-top: ${RFPercentage(35)}px;
-  height: ${RFValue(20)}px;
   padding: 0 25px;
 `;
