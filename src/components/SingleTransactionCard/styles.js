@@ -2,12 +2,16 @@ import styled from 'styled-components/native';
 import { RFValue, RFPercentage } from 'react-native-responsive-fontsize';
 import { AntDesign } from '@expo/vector-icons'; 
 
-export const Container = styled.View`
-  background-color: ${({ theme }) => theme.colors.primary_light};
+export const Background = styled.View`
   margin-bottom: 8px;
-  padding: 16px;
   border-radius: 8px;
+`;
+
+export const Container = styled.View`
+  border-radius: 8px;
+  padding: 16px;
   justify-content: space-between;
+  background-color: #FFFFFF11;
 `;
 
 export const Header = styled.View`

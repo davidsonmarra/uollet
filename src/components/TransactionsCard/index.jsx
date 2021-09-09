@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
+  Background,
   Container,
   HeaderTransaction,
   Type,
@@ -16,15 +17,17 @@ const text = {
 
 export default function TransactionsCard({ type, icon, amount }) {
   return (
-    <Container>
-      <HeaderTransaction>
-        <Type>{text[type]}</Type>
-        {type === 'total' ? 
-          <IconTransactionTotal type={type} name={icon} /> : 
-          <IconTransaction type={type} name={icon} />
-        }
-      </HeaderTransaction>
-      <Amount>{amount < 0 ? `-${amount}` : `${amount}`}</Amount>
-    </Container>
+    <Background>
+      <Container>
+        <HeaderTransaction>
+          <Type>{text[type]}</Type>
+          {type === 'total' ? 
+            <IconTransactionTotal type={type} name={icon} /> : 
+            <IconTransaction type={type} name={icon} />
+          }
+        </HeaderTransaction>
+        <Amount amount={amount} type={type}>{amount < 0 ? `-${amount}` : `${amount}`}</Amount>
+      </Container>
+    </Background>
   );
 }

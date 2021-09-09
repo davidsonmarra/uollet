@@ -1,4 +1,5 @@
 import React from 'react';
+import { View, Text } from 'react-native';
 import { useTheme } from 'styled-components';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../screens/Home';
@@ -12,6 +13,9 @@ import selectedCriptoReducer from '../reducers/selectedCriptoReducer';
 import transactionsReducer from '../reducers/transactionsReducer';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
+import Toast, { BaseToast } from 'react-native-toast-message';
+import uuid from 'react-native-uuid';
+import theme from '../global/styles/theme';
 
 export default function AppRoutes() {
   const theme = useTheme();
@@ -77,6 +81,7 @@ export default function AppRoutes() {
           }}
         />
       </Navigator>
+      <Toast ref={(ref) => Toast.setRef(ref)} />
     </Provider>
   );
 }

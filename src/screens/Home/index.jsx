@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import TransactionsCard from '../../components/TransactionsCard';
 import SingleTransactionCard from '../../components/SingleTransactionCard';
-// import TransactionCriptoCard from '../../components/TransactionCriptoCard';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/core';
 import {
   Container,
   Header,
@@ -17,44 +18,52 @@ import { useSelector, useDispatch } from 'react-redux';
 
 export default function Home() {
   const transactions = useSelector((state) => state.transactions)
+  const [financial, setFinancial] = useState(0);
+  const [sell, setSell] = useState(0);
+  const [purchases, setPurchases] = useState(0);
+  
   const dispatch = useDispatch();
-  const [teste, setTeste] = useState([
-    {
-      cryptoId: "ripple",
-      cryptoName: 'Ripple',
-      cryptoSymbol: "xrp",
-      date: "09/09",
-      img: "https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png?1605778731",
-      priceBrl: "200",
-      priceCrypto: "33.44481605",
-      type: "purchase"
-    },
-    {
-      cryptoId: "litecoin",
-      cryptoName: 'Litecoin',
-      cryptoSymbol: "ltc",
-      date: "09/09",
-      img: "https://assets.coingecko.com/coins/images/2/large/litecoin.png?1547033580",
-      priceBrl: "350",
-      priceCrypto: "0.35195688",
-      type: "sell"
-    },
-    {
-      cryptoId: "chiliz",
-      cryptoName: 'chiliz',
-      cryptoSymbol: "chz",
-      date: "09/09",
-      img: "https://assets.coingecko.com/coins/images/8834/large/Chiliz.png?1561970540",
-      priceBrl: "100",
-      priceCrypto: "53.76344086",
-      type: "sell",
-    }
-  ]);
+  // const [coins, setCoins] = useState([]);
 
   useEffect(() => {
-    console.log(transactions)
+    async function storeTransactions() {
+      if(transactions.length > 0) {
+        try {
+          await AsyncStorage.setItem('@uollet:transactions', JSON.stringify(transactions));
+          console.log("ENTROU: ", JSON.stringify(transactions))
+        } catch(e) {
+          console.log(e);
+        }
+      } 
+    }
+    storeTransactions();
+    let buy = 0;
+    let seller = 0;
+    transactions.map(tr => {
+      if(tr.type === 'purchase')
+        buy += Number(tr.priceBrl);
+      else 
+        seller += Number(tr.priceBrl);
+    });
+    setPurchases(buy);
+    setSell(seller);
+    setFinancial(seller - buy);
   }, [transactions])
-  // const [coins, setCoins] = useState([]);
+
+  useEffect(() => {
+    async function getTransactions() {
+      try {
+        const value = await AsyncStorage.getItem('@uollet:transactions')
+        console.log("VALUE: ", value)
+        if(value !== null) {
+          dispatch({ type: 'GET_TRANSACTION_INITIAL', payload: JSON.parse(value)})
+        }
+      } catch(e) {
+        console.log(e);
+      }
+    }
+    getTransactions();
+  }, [])
 
 
   // useEffect(() => {
@@ -90,18 +99,27 @@ export default function Home() {
       <ContainerUserTransactions>
         <TransactionsCard 
           type="total" 
-          icon="coins"
-          amount="R$ 15.000,00"
+          icon="balance-scale"
+          amount={financial.toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+          })}
         />
         <TransactionsCard 
           type="sales"
           icon="trending-up" 
-          amount="R$ 18.000,00"
+          amount={sell.toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+          })}
         />
         <TransactionsCard 
-          type="purchases" 
+          type="purchases"
           icon="trending-down"  
-          amount="R$ 3.000,00"
+          amount={purchases.toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+          })} 
         />
       </ContainerUserTransactions>
       <TransactionList 

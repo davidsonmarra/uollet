@@ -4,6 +4,7 @@ import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 import Input from '../../components/Forms/Input';
 import Button from '../../components/Forms/Button';
 import ButtonTypeTransaction from '../../components/Forms/ButtonTypeTransaction';
+import Toast from 'react-native-toast-message';
 import { useForm } from 'react-hook-form';
 import {
   Container,
@@ -18,7 +19,7 @@ import {
 } from './styles';
 import { useSelector, useDispatch } from 'react-redux';
 import ListCripto from '../../components/ListCripto';
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useFocusEffect } from '@react-navigation/native'
 
 
 export default function Transactions() {
@@ -50,22 +51,42 @@ export default function Transactions() {
   }
 
   async function handleTransaction(form) {
-    const data = {
-      cryptoName: selectedCrypto.name,
-      img: selectedCrypto.image,
-      cryptoId: selectedCrypto.id, 
-      cryptoSymbol: selectedCrypto.symbol,
-      priceCrypto: criptoPrice,
-      priceBrl: price,
-      type: selectTypeButton,
-      date: Intl.DateTimeFormat('pt-BR', {
-        day: '2-digit',
-        month: '2-digit'
-      }).format(new Date)
+    if(selectedCrypto.id !== 'Moeda' && 
+      selectTypeButton !== '' && 
+      price !== '' &&
+      criptoPrice !== ''
+    ) {
+      const data = {
+        cryptoName: selectedCrypto.name,
+        img: selectedCrypto.image,
+        cryptoId: selectedCrypto.id, 
+        cryptoSymbol: selectedCrypto.symbol,
+        priceCrypto: criptoPrice,
+        priceBrl: price,
+        type: selectTypeButton,
+        date: Intl.DateTimeFormat('pt-BR', {
+          day: '2-digit',
+          month: '2-digit'
+        }).format(new Date)
+      }
+      await dispatch({ type: 'ADD_TRANSACTION', payload: data})
+      resetForm();
+      Toast.show({
+        type: 'success',
+        text1: 'Transação efetuada!',
+        text2: 'A transação foi efetuada com sucesso ✔',
+        position: 'bottom'
+      });
+      navigation.navigate('Início');
     }
-    await dispatch({ type: 'ADD_TRANSACTION', payload: data})
-    resetForm();
-    navigation.navigate('Início');
+    else {
+      Toast.show({
+        type: 'error',
+        text1: 'Algo deu errado!',
+        text2: 'A transação não pôde ser realizada com sucesso.',
+        position: 'bottom',
+      });
+    }
   }
 
   useEffect(() => {
