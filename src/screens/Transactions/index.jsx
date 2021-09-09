@@ -1,39 +1,122 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import CriptoSelect from '../../components/Forms/CriptoSelect';
+import InputForm from '../../components/Forms/InputForm';
 import Input from '../../components/Forms/Input';
 import Button from '../../components/Forms/Button';
 import ButtonTypeTransaction from '../../components/Forms/ButtonTypeTransaction';
+import { useForm } from 'react-hook-form';
 import {
   Container,
   Title,
+  Select,
   Form,
-  ContainerType
+  ContainerType,
+  Fields,
+  ModalCoin,
+  ListCoins,
+  ContainerModal
 } from './styles';
+import { useSelector, useDispatch } from 'react-redux';
+import ListCripto from '../../components/ListCripto';
 
 export default function Transactions() {
   const [selectTypeButton, setSelectTypeButton] = useState('');
+  const {control, handleSubmit} = useForm();
+  const [price, setPrice] = useState('');
+  const [criptoPrice, setCriptoPrice] = useState('');
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const coins = useSelector((state) => state.criptos);
+  const [selectedCrypto, setSelectedCrypto] = useState({
+    image: 'https://www.iconpacks.net/icons/2/free-dollar-coin-icon-2149-thumb.png',
+    id: 'Moeda',
+    current_price: 'Preço Atual'
+  });
+  const dispatch = useDispatch();
+
+  function handleTransaction(form) {
+    console.log(form);
+  }
+
+  useEffect(() => {
+    if(String(selectedCrypto.current_price) !== 'undefined' && 
+    (String(Number(price) / selectedCrypto.current_price)) !== 'Infinity' &&
+    (String(Number(price) / selectedCrypto.current_price)) !== 'NaN')
+      setCriptoPrice(String((Number(price) / selectedCrypto.current_price).toFixed(8)));
+    setIsModalVisible(false);
+  }, [selectedCrypto]);
+
+  useEffect(() => {
+    if(String(selectedCrypto.current_price) !== 'undefined' && 
+    (String(Number(price) / selectedCrypto.current_price)) !== 'Infinity' &&
+    (String(Number(price) / selectedCrypto.current_price)) !== 'NaN')
+      setCriptoPrice(String((Number(price) / selectedCrypto.current_price).toFixed(8)));
+  }, [price])
+
   return (
     <Container>
-      <Title>Transação</Title>
       <Form>
+        <Title>Transação</Title>
+        <Select>
+          <CriptoSelect coin={selectedCrypto} setIsModalVisible={setIsModalVisible} />
+        </Select>
         <ContainerType>
+        <ButtonTypeTransaction 
+            type="purchase"
+            title="Comprar"
+            isSelectted={selectTypeButton === 'purchase'}
+            setSelectTypeButton={setSelectTypeButton}
+          />
           <ButtonTypeTransaction 
             type="sell"
             title="Vender"
             isSelectted={selectTypeButton === 'sell'}
             setSelectTypeButton={setSelectTypeButton}
           />
-          <ButtonTypeTransaction 
-            type="purchase"
-            title="Comprar"
-            isSelectted={selectTypeButton === 'purchase'}
-            setSelectTypeButton={setSelectTypeButton}
-          />
         </ContainerType>
-        <Input 
-          placeholder="Preço"
-        />
-        <Button title="Finalizar" />
+        <Fields>
+          <Input
+            name="price"
+            control={control}
+            placeholder="R$"
+            autoCorrect={false}
+            keyboardType="numeric"
+            value={price}
+            onChangeText={setPrice}
+          />
+          <Input 
+            name="criptoPrice"
+            placeholder={String(selectedCrypto.current_price)}
+            autoCorrect={false}
+            keyboardType="numeric"
+            editable={false} 
+            selectTextOnFocus={false}
+            value={criptoPrice}
+            
+          />
+        </Fields>
       </Form>
+      <Button 
+        title="Finalizar"
+        onPress={handleSubmit(handleTransaction)} 
+      />
+      <ModalCoin
+        isVisible={isModalVisible}
+        onBackdropPress={() => setIsModalVisible(false)}
+        scrollOffset={500}
+      >
+        {
+          coins.length > 0 &&
+          <ContainerModal>
+          <ListCoins 
+            data={coins}
+            renderItem={({ item }) => 
+              <ListCripto setSelectedCrypto={setSelectedCrypto} item={item}/>
+            }
+          />
+          </ContainerModal>
+            
+        }
+      </ModalCoin>
     </Container>
   );
 }

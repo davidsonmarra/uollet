@@ -4,12 +4,12 @@ import { RFValue } from 'react-native-responsive-fontsize';
 export const Container = styled.TextInput.attrs({
   placeholderTextColor: '#fefefe55'
 })`
-  width: 100%;
+  width: 50%;
+  margin-right: ${({ placeholder }) => placeholder === 'R$' ? '5px' : '0'};
   padding: 18px;
-  background-color: ${({ theme }) => theme.colors.input};
+  background-color: ${({ placeholder }) => placeholder === 'R$' ? '#FFFFFF22' : '#FFFFFF11'};
   font-size: ${RFValue(15)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
   color: ${({ theme }) => theme.colors.text};
   border-radius: 8px;
-  
 `;

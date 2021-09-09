@@ -31,13 +31,14 @@ export const ChartContainer = styled.View`
 `;
 
 export const ContainerChartPadding = styled.View`
-  padding-left: 20px;
+  padding-left: 30px;
 `;
 
 export const LoadingContainer = styled.View`
   justify-content: center;
   align-items: center;
-  height: 53%;
+  height: ${RFValue(300)}px;
+  height: ${RFValue(350)}px;
 `;
 
 export const ContainerList = styled.View`
@@ -45,5 +46,6 @@ export const ContainerList = styled.View`
 `;
 
 export const TransactionList = styled.FlatList`
+  padding: 0 25px 100px;
   width: 100%;
 `;

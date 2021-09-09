@@ -3,8 +3,8 @@ import {
   Container,
 } from './styles';
 
-export default function Input({ placeholder }) {
+export default function Input({ placeholder, value, ...rest }) {
   return (
-    <Container placeholder={placeholder} />
+    <Container placeholder={placeholder} value={value} {...rest} />
   );
 }

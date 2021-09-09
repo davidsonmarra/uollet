@@ -4,7 +4,6 @@ import { RectButton } from 'react-native-gesture-handler';
 
 export const Container = styled.View`
   width: 100%;
-  
 `;
 
 export const ButtonSubmit = styled(RectButton).attrs({
@@ -13,8 +12,9 @@ export const ButtonSubmit = styled(RectButton).attrs({
   width: 100%;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.primary_light};
+  background-color: ${({ theme }) => theme.colors.primary};
   border-radius: 5px;
+  
 `;
 
 export const Title = styled.Text`

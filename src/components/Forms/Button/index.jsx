@@ -5,10 +5,10 @@ import {
   Title
 } from './styles';
 
-export default function Button({ title }) {
+export default function Button({ title, onPress }) {
   return (
     <Container>
-      <ButtonSubmit>
+      <ButtonSubmit onPress={onPress}>
         <Title>{title}</Title>
       </ButtonSubmit>
     </Container>

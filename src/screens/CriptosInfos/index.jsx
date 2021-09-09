@@ -16,10 +16,14 @@ import {
 } from './styles';
 import apiCoinGecko from '../../services/coinGecko';
 import criptos from '../../utils/criptos';
+import { useSelector, useDispatch } from 'react-redux';
 
 export default function CriptosInfos() {
   const theme = useTheme();
-  const [coins, setCoins] = useState([]);
+  // const [coins, setCoins] = useState([]);
+  const coins = useSelector((state) => state.criptos);
+  const dispatch = useDispatch();
+
   const [selectedCrypto, setSelectedCrypto] = useState({});
   const [dataChart, setDataChart] = useState([]);
   const [isLoading, setIsLoading] = useState(true); 
@@ -40,6 +44,7 @@ export default function CriptosInfos() {
   }
 
   useEffect(() => {
+    
     async function fetchData() {
       await apiCoinGecko.get('/coins/markets/', {
         params: {
@@ -47,13 +52,17 @@ export default function CriptosInfos() {
           ids: criptos
         }
       }).then(res => {
-        setCoins(res.data);
+        // setCoins(res.data);
+        console.log(res.data)
+        dispatch({type: 'SET_INFOS', payload: res.data})
         setSelectedCrypto(res.data[0]);
         setIsLoading(false);
       })
       .catch(err => console.log(err))
     }
     fetchData();
+    
+    
   }, []);
 
   useEffect(() => {
@@ -78,6 +87,7 @@ export default function CriptosInfos() {
 
   return (
     <Container>
+      <ContainerList>
         <ChartContainer>
           {
             coins.length > 0 && selectedCrypto.current_price !== undefined &&
@@ -95,6 +105,8 @@ export default function CriptosInfos() {
             !isLoading ?
             <ContainerChartPadding>
               <VictoryChart
+                height={350}
+                width={400}
                 theme={VictoryTheme.material}
               > 
                 <VictoryLine
@@ -106,7 +118,6 @@ export default function CriptosInfos() {
                       strokeWidth: 5, 
                     },
                     parent: { border: "1px solid #ccc"},
-          
                   }}
                   data={dataChart}
                 />
@@ -117,7 +128,7 @@ export default function CriptosInfos() {
             </LoadingContainer>
           }
         </ChartContainer>
-        <ContainerList>
+          
           {
             coins.length > 0 &&
             <TransactionList 

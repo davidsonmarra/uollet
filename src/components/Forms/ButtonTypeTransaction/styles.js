@@ -4,9 +4,10 @@ import { RectButton } from 'react-native-gesture-handler';
 
 export const Container = styled.View`
   width: 50%;
-  margin-right: ${({ type }) => type === 'sell' ? '5px' : '0'};
-  background-color: #FFFFFF;
+  margin-left: ${({ type }) => type === 'sell' ? '5px' : '0'};
+  background-color: #FFFFFF11;
   border-radius: 8px;
+  
 `;
 
 export const Button = styled(RectButton)`
@@ -18,7 +19,7 @@ export const Button = styled(RectButton)`
   theme.colors.green : 
   isSelectted && type === 'purchase' ?
   theme.colors.red :
-  theme.colors.background_light};
+  '#FFFFFF11'};
   border-radius: 8px;
 
 `
