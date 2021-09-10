@@ -1,7 +1,7 @@
 ![React Native](https://img.shields.io/badge/react_native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 <img src="https://img.shields.io/badge/Expo-1B1F23?style=for-the-badge&logo=expo&logoColor=white">
 
-<div align="center" ><img alt="Logo Uollet" width="1000"  height="200" src="./src/assets/uollet-logo.svg"></div>
+<div align="center" ><img alt="Logo Uollet" width="1000"  height="200" src="./src/assets/logo-uollet.svg"></div>
 
 <h2>Descrição</h2>
 <p>Uollet é uma exchange de criptomoedas desenvolvido em React Native.<br>

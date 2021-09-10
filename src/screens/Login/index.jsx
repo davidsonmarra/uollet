@@ -3,7 +3,7 @@ import { useTheme } from 'styled-components';
 import { useForm } from 'react-hook-form';
 import GoogleSvg from '../../assets/google';
 import AppleSvg from '../../assets/apple';
-import Logo from '../../assets/logo-uollet';
+import Logo from '../../assets/logo-uollet-login';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import {
   Container,
