@@ -98,7 +98,6 @@ export default function Transactions() {
   }, [selectedCrypto]);
 
   useEffect(() => {
-    console.log(criptoPrice)
     if(criptoPrice === 'undefined')
       setCriptoPrice('');
   }, [criptoPrice]);
@@ -119,12 +118,12 @@ export default function Transactions() {
             <CriptoSelect coin={selectedCrypto} setIsModalVisible={setIsModalVisible} />
           </Select>
           <ContainerType>
-          <ButtonTypeTransaction 
-              type="purchase"
-              title="Comprar"
-              isSelectted={selectTypeButton === 'purchase'}
-              setSelectTypeButton={setSelectTypeButton}
-            />
+            <ButtonTypeTransaction 
+                type="purchase"
+                title="Comprar"
+                isSelectted={selectTypeButton === 'purchase'}
+                setSelectTypeButton={setSelectTypeButton}
+              />
             <ButtonTypeTransaction 
               type="sell"
               title="Vender"

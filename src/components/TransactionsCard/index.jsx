@@ -15,7 +15,7 @@ const text = {
   sales: 'Vendas'
 }
 
-export default function TransactionsCard({ type, icon, amount }) {
+export default function TransactionsCard({ type, icon, amount, financial }) {
   return (
     <Background>
       <Container>
@@ -26,7 +26,7 @@ export default function TransactionsCard({ type, icon, amount }) {
             <IconTransaction type={type} name={icon} />
           }
         </HeaderTransaction>
-        <Amount amount={amount} type={type}>{amount < 0 ? `-${amount}` : `${amount}`}</Amount>
+        <Amount amount={financial} type={type}>{amount < 0 ? `-${amount}` : `${amount}`}</Amount>
       </Container>
     </Background>
   );

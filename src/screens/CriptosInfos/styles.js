@@ -31,13 +31,13 @@ export const ChartContainer = styled.View`
 `;
 
 export const ContainerChartPadding = styled.View`
-  padding-left: 30px;
+  padding-left: ${RFValue(30)}px;
 `;
 
 export const LoadingContainer = styled.View`
   justify-content: center;
   align-items: center;
-  height: ${RFValue(300)}px;
+  width: ${RFValue(400)}px;
   height: ${RFValue(350)}px;
 `;
 

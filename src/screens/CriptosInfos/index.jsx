@@ -43,27 +43,29 @@ export default function CriptosInfos() {
     return formattedData;
   }
 
-  useEffect(() => {
+  useEffect(() => { setSelectedCrypto(coins[0]) },[])
+
+  // useEffect(() => {
     
-    async function fetchData() {
-      await apiCoinGecko.get('/coins/markets/', {
-        params: {
-          vs_currency: 'brl',
-          ids: criptos
-        }
-      }).then(res => {
-        // setCoins(res.data);
-        console.log(res.data)
-        dispatch({type: 'SET_INFOS', payload: res.data})
-        setSelectedCrypto(res.data[0]);
-        setIsLoading(false);
-      })
-      .catch(err => console.log(err))
-    }
-    fetchData();
+  //   async function fetchData() {
+  //     await apiCoinGecko.get('/coins/markets/', {
+  //       params: {
+  //         vs_currency: 'brl',
+  //         ids: criptos
+  //       }
+  //     }).then(res => {
+  //       // setCoins(res.data);
+  //       console.log(res.data)
+  //       dispatch({type: 'SET_INFOS', payload: res.data})
+  //       setSelectedCrypto(res.data[0]);
+  //       setIsLoading(false);
+  //     })
+  //     .catch(err => console.log(err))
+  //   }
+  //   fetchData();
     
     
-  }, []);
+  // }, []);
 
   useEffect(() => {
     if (selectedCrypto === {}) 
@@ -106,7 +108,7 @@ export default function CriptosInfos() {
             <ContainerChartPadding>
               <VictoryChart
                 height={350}
-                width={400}
+                width={350}
                 theme={VictoryTheme.material}
               > 
                 <VictoryLine
