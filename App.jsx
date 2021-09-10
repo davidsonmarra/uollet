@@ -14,6 +14,7 @@ import theme from './src/global/styles/theme';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import AppRoutes from './src/routes/app.routes';
+import PublicRoutes from './src/routes/public.routes'
 
 export default function App() {
 
@@ -30,7 +31,7 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <NavigationContainer>
         <StatusBar barStyle="light-content"/>
-        <AppRoutes />
+        <PublicRoutes/>
       </NavigationContainer>
     </ThemeProvider>
   );

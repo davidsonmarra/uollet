@@ -35,7 +35,7 @@ export default function Transactions() {
     current_price: 'Preço Atual'
   });
 
-  const transactions = useSelector((state) => state.transactions)
+  const transactions = useSelector((state) => state.transactions);
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -136,6 +136,7 @@ export default function Transactions() {
               name="price"
               control={control}
               placeholder="R$"
+              placeholderTextColor='#FFFFFF88'
               autoCorrect={false}
               keyboardType="numeric"
               value={price}
@@ -144,6 +145,7 @@ export default function Transactions() {
             <Input 
               name="criptoPrice"
               placeholder={String(selectedCrypto.current_price)}
+              placeholderTextColor='#FFFFFF88'
               autoCorrect={false}
               keyboardType="numeric"
               editable={false} 
