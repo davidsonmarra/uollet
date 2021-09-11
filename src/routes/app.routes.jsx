@@ -8,39 +8,28 @@ import ButtonTransaction from '../components/ButtonTransaction';
 import Transactions from '../screens/Transactions';
 import { SimpleLineIcons, Ionicons  } from '@expo/vector-icons'; 
 const { Navigator, Screen } = createBottomTabNavigator();
-import criptosReducer from '../reducers/criptosReducer';
-import selectedCriptoReducer from '../reducers/selectedCriptoReducer';
-import transactionsReducer from '../reducers/transactionsReducer';
-import { createStore, combineReducers } from 'redux';
-import { Provider } from 'react-redux';
-import Toast, { BaseToast } from 'react-native-toast-message';
+
 import uuid from 'react-native-uuid';
 import theme from '../global/styles/theme';
 
 export default function AppRoutes() {
   const theme = useTheme();
 
-  const allReducers = combineReducers({
-    criptos: criptosReducer,
-    selectedCrypto: selectedCriptoReducer,
-    transactions: transactionsReducer
-  });
-  const store = createStore(allReducers);
-
   return (
-    <Provider store={store}>
+    <>
       <Navigator
         screenOptions={{
           headerShown: false,
           tabBarActiveTintColor: theme.colors.primary_dark,
           tabBarInactiveTintColor: theme.colors.inactive,
           tabBarShowLabel: false,
-          // tabBarHideOnKeyboard: true,
+          tabBarHideOnKeyboard: true,
           tabBarStyle: {
             paddingBottom: 10,
             paddingTop: 10,
             height: 75,
-            backgroundColor: theme.colors.background_light,
+            backgroundColor: '#0a152b',
+            borderTopWidth: 1,
             borderTopColor: theme.colors.primary_dark
           },
         }}
@@ -81,7 +70,6 @@ export default function AppRoutes() {
           }}
         />
       </Navigator>
-      <Toast ref={(ref) => Toast.setRef(ref)} />
-    </Provider>
+    </>
   );
 }

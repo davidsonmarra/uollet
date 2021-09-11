@@ -19,15 +19,15 @@ import { ActivityIndicator } from 'react-native';
 import apiCoinGecko from '../../services/coinGecko';
 import criptos from '../../utils/criptos';
 
-export default function Home() {
+export default function Home({ navigation }) {
   const transactions = useSelector((state) => state.transactions);
   const coins = useSelector((state) => state.criptos);
   const [financial, setFinancial] = useState(0);
   const [sell, setSell] = useState(0);
   const [purchases, setPurchases] = useState(0);
   const [isLoadingCriptosInfo, setIsLoadingCriptosInfo] = useState(true);
+
   const dispatch = useDispatch();
-  // const [coins, setCoins] = useState([]);
   const theme = useTheme();
 
   useEffect(() => {
@@ -39,8 +39,7 @@ export default function Home() {
           ids: criptos
         }
       }).then(res => {
-        // setCoins(res.data);
-        console.log(res.data)
+        // console.log(res.data)
         dispatch({type: 'SET_INFOS', payload: res.data})
         setIsLoadingCriptosInfo(false);
       })
@@ -90,23 +89,6 @@ export default function Home() {
   }, [])
 
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     await apiCoinGecko.get('/coins/markets/', {
-  //       params: {
-  //         vs_currency: 'brl',
-  //         ids: criptos
-  //       }
-  //     }).then(res => {
-  //       setCoins(res.data)
-  //       console.log(coins);
-  //     })
-  //     .catch(err => console.log(err))
-  //   }
-  //   fetchData();
-    
-  // }, []);
-
   return (
     <Container>
       {
@@ -120,7 +102,7 @@ export default function Home() {
                 Davidson
               </WellcomeText>
             </Wellcome>
-            <LogoutButton>
+            <LogoutButton onPress={() => navigation.navigate('Login')}>
               <IconLogout name="logout" />
             </LogoutButton>
           </Header>

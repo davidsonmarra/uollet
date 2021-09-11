@@ -18,7 +18,7 @@ import apiCoinGecko from '../../services/coinGecko';
 import criptos from '../../utils/criptos';
 import { useSelector, useDispatch } from 'react-redux';
 
-export default function CriptosInfos() {
+export default function CriptosInfos({ navigation }) {
   const theme = useTheme();
   // const [coins, setCoins] = useState([]);
   const coins = useSelector((state) => state.criptos);
@@ -44,28 +44,6 @@ export default function CriptosInfos() {
   }
 
   useEffect(() => { setSelectedCrypto(coins[0]) },[])
-
-  // useEffect(() => {
-    
-  //   async function fetchData() {
-  //     await apiCoinGecko.get('/coins/markets/', {
-  //       params: {
-  //         vs_currency: 'brl',
-  //         ids: criptos
-  //       }
-  //     }).then(res => {
-  //       // setCoins(res.data);
-  //       console.log(res.data)
-  //       dispatch({type: 'SET_INFOS', payload: res.data})
-  //       setSelectedCrypto(res.data[0]);
-  //       setIsLoading(false);
-  //     })
-  //     .catch(err => console.log(err))
-  //   }
-  //   fetchData();
-    
-    
-  // }, []);
 
   useEffect(() => {
     if (selectedCrypto === {}) 

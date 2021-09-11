@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Input from '../Input';
 import { Control, Controller } from 'react-hook-form';
-import { Container, ViewBtn, Button, Eye } from './styles';
+import { Container, ViewBtn, Button, Eye, Error } from './styles';
 import { useTheme } from 'styled-components';
 
 export default function InputForm({
@@ -9,12 +9,14 @@ export default function InputForm({
   icon,
   control,
   defaultValue,
+  error,
   secureTextEntry,
   setIsVisible,
   ...rest 
 }) {
   const theme = useTheme();
   return (
+    <>
     <Container>
       {icon}
       <Controller
@@ -41,5 +43,7 @@ export default function InputForm({
           </Button></ViewBtn>)
       }
     </Container>
+    {error && <Error>{error}</Error>}
+    </>
   );
 }

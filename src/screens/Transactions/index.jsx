@@ -35,6 +35,10 @@ export default function Transactions() {
     current_price: 'Preço Atual'
   });
 
+  useFocusEffect(() => {
+    console.log(coins)
+  })
+
   const transactions = useSelector((state) => state.transactions);
   const dispatch = useDispatch();
   const navigation = useNavigation();

@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@expo-google-fonts/poppins": "^0.2.0",
+    "@hookform/resolvers": "^2.8.0",
     "@react-native-async-storage/async-storage": "~1.15.0",
     "@react-native-picker/picker": "1.16.1",
     "@react-navigation/bottom-tabs": "^6.0.5",
@@ -40,7 +41,8 @@
     "react-redux": "^7.2.5",
     "redux": "^4.1.1",
     "styled-components": "^5.3.1",
-    "victory-native": "^35.5.4"
+    "victory-native": "^35.5.4",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
