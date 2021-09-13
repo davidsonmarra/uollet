@@ -4,7 +4,7 @@ import { useTheme } from 'styled-components';
 import GoogleSvg from '../../assets/google';
 import AppleSvg from '../../assets/apple';
 import Logo from '../../assets/logo-uollet-login';
-import { Ionicons, FontAwesome } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import {
   Container,
   Header,
@@ -34,7 +34,7 @@ const schema = Yup.object().shape({
   email: Yup
   .string()
   .email('Digite um e-mail válido')
-  .required('Obrigattório ter um e-mail'),
+  .required('Obrigatório ter um e-mail'),
   password: Yup
   .string()
   .min(6, 'Minimo de 6 caracteres')

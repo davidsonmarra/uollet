@@ -33,7 +33,7 @@ export default function InputForm({
         name={name}
       />
       {
-        name === 'password' &&
+        (name === 'password' || name === 'passwordConfirm') &&
         (secureTextEntry 
         ? <ViewBtn onPress={() => setIsVisible(false)}><Button >
             <Eye name="eye" size={22} color={theme.colors.primary} />

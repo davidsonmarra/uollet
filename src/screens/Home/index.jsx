@@ -77,7 +77,7 @@ export default function Home({ navigation }) {
   useEffect(() => {
     async function getTransactions() {
       try {
-        const value = await AsyncStorage.getItem('@uollet:transactions')
+        const value = await AsyncStorage.getItem('@uollet:transactions');
         if(value !== null) {
           dispatch({ type: 'GET_TRANSACTION_INITIAL', payload: JSON.parse(value)})
         }
