@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { Alert, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useForm } from 'react-hook-form';
 import { useTheme } from 'styled-components';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Toast from 'react-native-toast-message';
+import firebase from '../../config/firebase';
+
 import {
   Container,
   Header,
@@ -51,15 +53,42 @@ export default function Register({ navigation }) {
   const [isVisiblePasswordConfirm, setIsVisiblePasswordConfirm] = useState(true);
   const theme = useTheme();
 
-  function SignIn(data) {
-    reset();
-    Toast.show({
-      type: 'success',
-      text1: 'Cadastro efetuado!',
-      text2: `Seja bem vindo ${data.name}, o seu cadastro foi efetuado com sucesso ✔`,
-      position: 'bottom',
+  function registerNewUser(data) {
+    firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
+    .then((userCredential) => {
+      // Signed in
+      let user = userCredential.user;
+      user.updateProfile({
+        displayName: data.name
+      })
+      // console.log(user);
+      Toast.show({
+        type: 'success',
+        text1: 'Cadastro efetuado!',
+        text2: `Seja bem vindo ${data.name}, o seu cadastro foi efetuado com sucesso ✔`,
+        position: 'bottom',
+      });
+      navigation.navigate('Login');
+      return true;
+    })
+    .catch((error) => {
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      console.log(errorMessage);
+      Toast.show({
+        type: 'error',
+        text1: 'Algo deu errado!',
+        text2: `Algo não funcionou corretamente e impossibilitou o cadastro! ❌`,
+        position: 'bottom',
+      });
+      return false;
     });
-    navigation.navigate('Login');
+  }
+
+  async function signUp(data) {
+    if(await registerNewUser(data)) {
+      reset();
+    }
   }
 
   return (
@@ -131,7 +160,7 @@ export default function Register({ navigation }) {
           />
         </Form>
         <ButtonContainer>
-          <Button onPress={handleSubmit(SignIn)}>
+          <Button onPress={handleSubmit(signUp)}>
             <ButtonText>Cadastrar</ButtonText>
           </Button>
         </ButtonContainer>

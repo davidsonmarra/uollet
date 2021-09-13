@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { useTheme } from 'styled-components';
 import GoogleSvg from '../../assets/google';
@@ -29,6 +29,11 @@ import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Toast from 'react-native-toast-message';
+import firebase from '../../config/firebase';
+import { useSelector, useDispatch } from 'react-redux';
+import { ActivityIndicator } from 'react-native';
+import apiCoinGecko from '../../services/coinGecko';
+import criptos from '../../utils/criptos';
 
 const schema = Yup.object().shape({
   email: Yup
@@ -51,20 +56,84 @@ export default function Login() {
     formState: { errors }
   } = useForm({ resolver: yupResolver(schema) })
   const navigation = useNavigation();
-
   const [isVisible, setIsVisible] = useState(true);
   const theme = useTheme();
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const dispatch = useDispatch();
+  const isLogged = useSelector((state) => state.isLogged);
+  const transactions = useSelector((state) => state.transactions);
+  const coins = useSelector((state) => state.criptos);
+
+  async function fetchData() {
+    await apiCoinGecko.get('/coins/markets/', {
+      params: {
+        vs_currency: 'brl',
+        ids: criptos
+      }
+    }).then(res => {
+      // console.log(res.data)
+      dispatch({type: 'SET_INFOS', payload: res.data})
+      setIsLoading(false);
+      Toast.show({
+        type: 'success',
+        text1: 'Login efetuado!',
+        text2: 'O login foi efetuado com sucesso ✔',
+        position: 'bottom',
+      });
+      reset();
+      navigation.navigate('AppRoutes');
+    })
+    .catch(err => console.log(err))
+  }
+
+  useEffect(() => {
+    if(isLogged) {
+      setIsLoading(true);
+      fetchData();
+    }
+  }, [isLogged])
+
+  function loginUser(data) {
+    firebase.auth().signInWithEmailAndPassword(data.email, data.password)
+    .then((userCredential) => {
+      // Signed in
+      let user = userCredential.user;
+      console.log(user);
+      
+      // reset();
+      // navigation.navigate('AppRoutes');
+      dispatch({ type: 'LOGIN' });
+      return true;
+    })
+    .catch((error) => {
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      console.log(errorMessage);
+      Toast.show({
+        type: 'error',
+        text1: 'Algo deu errado!',
+        text2: `Usuário ou senha incorretos! ❌`,
+        position: 'bottom',
+      });
+      return false;
+    });
+  }
 
   function SignIn(data) {
-    reset();
-    Toast.show({
-      type: 'success',
-      text1: 'Login efetuado!',
-      text2: 'O login foi efetuado com sucesso ✔',
-      position: 'bottom',
-    });
-    navigation.navigate('AppRoutes');
+    console.log("Entrou");
+    if(loginUser(data)) {
+      // reset();
+      // navigation.navigate('AppRoutes');
+    }
   }
+
+  let provider = new firebase.auth.GoogleAuthProvider();
+  provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+
+  provider.setCustomParameters({
+    'login_hint': 'user@example.com'
+  });
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -105,7 +174,13 @@ export default function Login() {
           />
           
           <ButtonSubmit onPress={handleSubmit(SignIn)}>
-            <ButtonText>Entrar</ButtonText>
+            <ButtonText>
+            {
+              isLoading ?
+              <ActivityIndicator size={28} color={theme.colors.title} /> :
+              'Entrar'
+            }
+            </ButtonText>
           </ButtonSubmit>
           <BorderButton>
             <ButtonSignUp onPress={() => {

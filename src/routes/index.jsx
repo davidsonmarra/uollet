@@ -5,6 +5,7 @@ import AppRoutes from './app.routes';
 import criptosReducer from '../reducers/criptosReducer';
 import selectedCriptoReducer from '../reducers/selectedCriptoReducer';
 import transactionsReducer from '../reducers/transactionsReducer';
+import isLoggedReducer from '../reducers/isLoggedReducer';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import Toast, { BaseToast } from 'react-native-toast-message';
@@ -15,7 +16,8 @@ export default function Routes() {
   const allReducers = combineReducers({
     criptos: criptosReducer,
     selectedCrypto: selectedCriptoReducer,
-    transactions: transactionsReducer
+    transactions: transactionsReducer,
+    isLogged: isLoggedReducer
   });
   const store = createStore(allReducers);
   
