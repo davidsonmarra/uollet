@@ -4,6 +4,7 @@ import Login from '../screens/Login';
 import Register from '../screens/Register';
 import { useTheme } from 'styled-components';
 import AppRoutes from './app.routes';
+import ForgotPassword from '../screens/ForgotPassword';
 const { Navigator, Screen } = createNativeStackNavigator();
 
 export default function PublicRoutes() {  
@@ -24,6 +25,20 @@ export default function PublicRoutes() {
       <Screen
         name="Cadastrar"
         component={Register}
+        options={{
+          headerStyle: {
+            backgroundColor: theme.colors.primary,
+          },
+          headerTintColor: theme.colors.title,
+          headerTitleStyle: {
+            fontFamily: theme.fonts.bold,
+          },
+          headerBackTitle: "Voltar"
+        }}
+      />
+      <Screen
+        name="Esqueci a senha"
+        component={ForgotPassword}
         options={{
           headerStyle: {
             backgroundColor: theme.colors.primary,

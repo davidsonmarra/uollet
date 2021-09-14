@@ -191,9 +191,11 @@ export default function Login() {
               </ButtonTextUp>
             </ButtonSignUp>
           </BorderButton>
-          <ForgotPassword>
+          <ForgotPassword >
             <Ionicons name="md-information-circle-outline" size={24} color="black" />
-            <ForgotPassordText>Esqueceu a senha?</ForgotPassordText>
+            <ForgotPassordText onPress={() => {
+            navigation.navigate('Esqueci a senha');
+          }}>Esqueceu a senha?</ForgotPassordText>
           </ForgotPassword>
         </Form>
         <Footer>
