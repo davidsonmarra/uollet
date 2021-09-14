@@ -7,6 +7,7 @@ import {
   Container,
   Header,
   Wellcome,
+  PhotoContainer,
   Photo,
   WellcomeText,
   LogoutButton,
@@ -25,36 +26,18 @@ export default function Home({ navigation }) {
   const [sell, setSell] = useState(0);
   const [purchases, setPurchases] = useState(0);
   const isLogged = useSelector((state) => state.isLogged);
-  // const [isLoadingCriptosInfo, setIsLoadingCriptosInfo] = useState(false);
+  const user = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
   const theme = useTheme();
 
-  // useEffect(() => {
-    
-  //   async function fetchData() {
-  //     await apiCoinGecko.get('/coins/markets/', {
-  //       params: {
-  //         vs_currency: 'brl',
-  //         ids: criptos
-  //       }
-  //     }).then(res => {
-  //       // console.log(res.data)
-  //       dispatch({type: 'SET_INFOS', payload: res.data})
-  //       setIsLoadingCriptosInfo(false);
-  //     })
-  //     .catch(err => console.log(err))
-  //   }
-  //   fetchData();
-  // }, []);
-
-
+  const KEY = `@uollet:transactions_${String(user.id)}`;
 
   useEffect(() => {
     async function storeTransactions() {
       if(transactions.length > 0) {
         try {
-          await AsyncStorage.setItem('@uollet:transactions', JSON.stringify(transactions));
+          await AsyncStorage.setItem(KEY, JSON.stringify(transactions));
         } catch(e) {
           console.log(e);
         }
@@ -76,11 +59,16 @@ export default function Home({ navigation }) {
 
   useEffect(() => {
     async function getTransactions() {
+      // await AsyncStorage.clear();
       try {
-        const value = await AsyncStorage.getItem('@uollet:transactions');
+        console.log("ID: ", String(user.id));
+        const value = await AsyncStorage.getItem(KEY);
+        // console.log("VALUE: ", value)
         if(value !== null) {
           dispatch({ type: 'GET_TRANSACTION_INITIAL', payload: JSON.parse(value)})
         }
+        else
+          dispatch({ type: 'GET_TRANSACTION_INITIAL', payload: []})
       } catch(e) {
         console.log(e);
       }
@@ -88,15 +76,17 @@ export default function Home({ navigation }) {
     getTransactions();
   }, []);
 
-  function logout() {
+  async function logout() {
+    dispatch({ type: 'RESET_TRANSACTIONS' });
+    dispatch({ type: 'USER_LOGOUT' });
     dispatch({ type: 'LOGOUT' });
-    navigation.navigate('Login');
     Toast.show({
       type: 'success',
       text1: 'Logout efetuado!',
       text2: 'O logout foi efetuado com sucesso ✔',
       position: 'bottom',
     })
+    navigation.navigate('Login');
   }
 
 
@@ -105,9 +95,9 @@ export default function Home({ navigation }) {
         <>
           <Header>
             <Wellcome>
-              <Photo source={{ uri: 'https://avatars.githubusercontent.com/u/80720221?v=4' }}/>
+              <PhotoContainer><Photo source={{ uri: user.avatar }}/></PhotoContainer>
               <WellcomeText>
-                Davidson
+                {user.name}
               </WellcomeText>
             </Wellcome>
             <LogoutButton onPress={logout}>

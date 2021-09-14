@@ -103,6 +103,7 @@ export default function Register({ navigation }) {
             name="name"  
             placeholder="nome"
             autoCapitalize='none'
+            autoCompleteType="off"
             error={errors.name && errors.name.message}
             icon={
               <Ionicons 
@@ -117,6 +118,7 @@ export default function Register({ navigation }) {
             name="email"  
             placeholder="e-mail"
             autoCapitalize='none'
+            autoCompleteType="off"
             error={errors.email && errors.email.message}
             icon={
               <MaterialIcons 
@@ -130,6 +132,7 @@ export default function Register({ navigation }) {
             control={control}
             name="password"  
             placeholder="senha"
+            autoCompleteType="off"
             secureTextEntry={isVisible}
             autoCapitalize='none'
             setIsVisible={setIsVisible}
@@ -146,6 +149,7 @@ export default function Register({ navigation }) {
             control={control}
             name="passwordConfirm"  
             placeholder="confirmação de senha"
+            autoCompleteType="off"
             secureTextEntry={isVisiblePasswordConfirm}
             autoCapitalize='none'
             setIsVisible={setIsVisiblePasswordConfirm}

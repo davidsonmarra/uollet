@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { Alert, Keyboard, TouchableWithoutFeedback } from 'react-native';
@@ -32,6 +32,7 @@ export default function ForgotPassword({ navigation }) {
     reset,
     formState: { errors }
   } = useForm({ resolver: yupResolver(schema) });
+
 
   function newPassword(data) {
     firebase.auth().sendPasswordResetEmail(data.email)
@@ -78,6 +79,7 @@ export default function ForgotPassword({ navigation }) {
             control={control}
             name="email"  
             placeholder="e-mail"
+            autoCompleteType="off"
             autoCapitalize='none'
             error={errors.email && errors.email.message}
             icon={

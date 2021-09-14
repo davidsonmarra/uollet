@@ -23,7 +23,7 @@ export default function AppRoutes() {
           tabBarActiveTintColor: theme.colors.primary_dark,
           tabBarInactiveTintColor: theme.colors.inactive,
           tabBarShowLabel: false,
-          tabBarHideOnKeyboard: true,
+          // tabBarHideOnKeyboard: true,
           tabBarStyle: {
             paddingBottom: 10,
             paddingTop: 10,

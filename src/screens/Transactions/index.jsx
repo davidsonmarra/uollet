@@ -20,6 +20,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import ListCripto from '../../components/ListCripto';
 import { useNavigation, useFocusEffect } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function Transactions() {
@@ -35,13 +36,18 @@ export default function Transactions() {
     current_price: 'Preço Atual'
   });
 
-  useFocusEffect(() => {
-    console.log(coins)
-  })
-
   const transactions = useSelector((state) => state.transactions);
   const dispatch = useDispatch();
   const navigation = useNavigation();
+
+  // useFocusEffect(() => {
+  
+  //   async function resetStorage() {
+  //     await AsyncStorage.clear();
+  //     console.log("Apagado")
+  //   }
+  //   resetStorage();
+  // })
 
   function resetForm() {
     setSelectedCrypto({

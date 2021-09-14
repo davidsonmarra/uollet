@@ -36,6 +36,7 @@ export const InputEmail = styled(InputForm).attrs({
   activeOpacity : 0.5
 })`
   font-size: ${RFValue(16)}px;
+  width: 100%;
   font-family: ${({ theme }) => theme.fonts.regular};
   color: ${({ theme }) => theme.colors.background_light};
 `;

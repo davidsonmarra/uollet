@@ -22,11 +22,17 @@ export const Wellcome = styled.View`
   align-items: center;
 `;
 
-export const Photo = styled.Image`
-  width: ${RFValue(55)}px;
-  height: ${RFValue(55)}px;
-  border-radius: 8px;
+export const PhotoContainer = styled.View`
+  width: ${RFValue(40)}px;
+  height: ${RFValue(40)}px;
+  border-radius: ${RFPercentage(50)}px;
+  border: 1px solid ${({ theme }) => theme.colors.primary};
   margin-right: 10px;
+`;
+
+export const Photo = styled.Image`
+  flex: 1;
+  border-radius: ${RFPercentage(50)}px;
 `;
 
 export const WellcomeText = styled.Text`

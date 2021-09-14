@@ -64,6 +64,7 @@ export default function Login() {
   const isLogged = useSelector((state) => state.isLogged);
   const transactions = useSelector((state) => state.transactions);
   const coins = useSelector((state) => state.criptos);
+  const user = useSelector((state) => state.user);
 
   async function fetchData() {
     await apiCoinGecko.get('/coins/markets/', {
@@ -72,15 +73,8 @@ export default function Login() {
         ids: criptos
       }
     }).then(res => {
-      // console.log(res.data)
       dispatch({type: 'SET_INFOS', payload: res.data})
       setIsLoading(false);
-      Toast.show({
-        type: 'success',
-        text1: 'Login efetuado!',
-        text2: 'O login foi efetuado com sucesso ✔',
-        position: 'bottom',
-      });
       reset();
       navigation.navigate('AppRoutes');
     })
@@ -88,22 +82,32 @@ export default function Login() {
   }
 
   useEffect(() => {
-    if(isLogged) {
-      setIsLoading(true);
+    if(isLogged && user != {}) {
       fetchData();
     }
   }, [isLogged])
 
-  function loginUser(data) {
-    firebase.auth().signInWithEmailAndPassword(data.email, data.password)
+  async function loginUser(data) {
+    await firebase.auth().signInWithEmailAndPassword(data.email, data.password)
     .then((userCredential) => {
       // Signed in
       let user = userCredential.user;
-      console.log(user);
       
-      // reset();
-      // navigation.navigate('AppRoutes');
+      const currentUser = {
+        name: user.displayName,
+        email: user.email, 
+        id: user.uid,
+        avatar: user.photoURL ? 
+        user.photoURL : `https://ui-avatars.com/api/?name=${user.displayName}&length=1`
+      }
+      dispatch({ type: 'USER_LOGIN', payload: currentUser });
       dispatch({ type: 'LOGIN' });
+      Toast.show({
+        type: 'success',
+        text1: 'Login efetuado!',
+        text2: 'O login foi efetuado com sucesso ✔',
+        position: 'bottom',
+      });
       return true;
     })
     .catch((error) => {
@@ -121,10 +125,9 @@ export default function Login() {
   }
 
   function SignIn(data) {
-    console.log("Entrou");
+    setIsLoading(true);
     if(loginUser(data)) {
-      // reset();
-      // navigation.navigate('AppRoutes');
+      
     }
   }
 
@@ -147,6 +150,7 @@ export default function Login() {
             name="email"  
             placeholder="e-mail"
             autoCapitalize='none'
+            autoCompleteType="off"
             error={errors.email && errors.email.message}
             icon={
               <Ionicons 
@@ -159,6 +163,7 @@ export default function Login() {
           <InputLogin 
             control={control}
             name="password"  
+            autoCompleteType="off"
             placeholder="senha"
             secureTextEntry={isVisible}
             autoCapitalize='sentences'
@@ -215,6 +220,5 @@ export default function Login() {
         </Footer>
       </Container>
     </TouchableWithoutFeedback>
-
   );
 }
