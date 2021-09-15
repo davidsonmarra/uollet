@@ -31,9 +31,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import Toast from 'react-native-toast-message';
 import firebase from '../../config/firebase';
 import { useSelector, useDispatch } from 'react-redux';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, Platform, Alert } from 'react-native';
 import apiCoinGecko from '../../services/coinGecko';
 import criptos from '../../utils/criptos';
+import { signInWithGoogleAsync } from '../../utils/googleLogin';
 
 const schema = Yup.object().shape({
   email: Yup
@@ -65,27 +66,45 @@ export default function Login() {
   const transactions = useSelector((state) => state.transactions);
   const coins = useSelector((state) => state.criptos);
   const user = useSelector((state) => state.user);
-
-  async function fetchData() {
-    await apiCoinGecko.get('/coins/markets/', {
-      params: {
-        vs_currency: 'brl',
-        ids: criptos
-      }
-    }).then(res => {
-      dispatch({type: 'SET_INFOS', payload: res.data})
-      setIsLoading(false);
-      reset();
-      navigation.navigate('AppRoutes');
-    })
-    .catch(err => console.log(err))
-  }
-
+  
   useEffect(() => {
     if(isLogged && user != {}) {
       fetchData();
     }
   }, [isLogged])
+//===================================================================================
+  // LOGINS
+
+  async function handleSignInWithGoogle() {
+    setIsLoading(true);
+    try {
+      const userLogin = await signInWithGoogleAsync();
+      console.log("USER:", userLogin);
+      const currentUser = {
+        name: userLogin.user.givenName,
+        email: userLogin.user.email, 
+        id: userLogin.user.id,
+        avatar: userLogin.user.photoUrl ? 
+        userLogin.user.photoUrl : `https://ui-avatars.com/api/?name=${userLogin.user.givenName}&length=1`
+      }
+      dispatch({ type: 'USER_LOGIN', payload: currentUser });
+      dispatch({ type: 'LOGIN' });
+      Toast.show({
+        type: 'success',
+        text1: 'Login efetuado!',
+        text2: 'O login foi efetuado com sucesso ✔',
+        position: 'bottom',
+      });
+      return true;
+    } catch (err) {
+      console.log(err);
+      Alert.alert("Não foi possível conectar a conta Google");
+    }
+    
+  }
+
+  useEffect(() => { console.log(user)}, [user])
+
 
   async function loginUser(data) {
     await firebase.auth().signInWithEmailAndPassword(data.email, data.password)
@@ -137,6 +156,22 @@ export default function Login() {
   provider.setCustomParameters({
     'login_hint': 'user@example.com'
   });
+//================================================================================================================================
+  // CRIPTOS INFO
+  async function fetchData() {
+    await apiCoinGecko.get('/coins/markets/', {
+      params: {
+        vs_currency: 'brl',
+        ids: criptos
+      }
+    }).then(res => {
+      dispatch({type: 'SET_INFOS', payload: res.data})
+      setIsLoading(false);
+      reset();
+      navigation.navigate('AppRoutes');
+    })
+    .catch(err => console.log(err))
+  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -207,15 +242,18 @@ export default function Login() {
           <FooterText>Entrar com:</FooterText>
           <SocialButtonsContainer>
             <ButtonContainer>
-              <SocialButton  >
+              <SocialButton onPress={() => handleSignInWithGoogle()} >
                 <GoogleSvg width={50} height={50} />
               </SocialButton>
             </ButtonContainer>
-            <ButtonContainer>
-              <SocialButton  >
-                <AppleSvg width={50} height={50} />
-              </SocialButton>
-            </ButtonContainer>
+            {
+              Platform.OS === 'ios' &&
+              <ButtonContainer>
+                <SocialButton  >
+                  <AppleSvg width={50} height={50} />
+                </SocialButton>
+              </ButtonContainer>
+            }
           </SocialButtonsContainer>
         </Footer>
       </Container>

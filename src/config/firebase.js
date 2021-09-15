@@ -5,7 +5,7 @@ import 'firebase/storage';
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyASwbnZhxi2Fw6guDN9OHl9EALhF_lJeL0",
   authDomain: "uollet-cb0b4.firebaseapp.com",
   projectId: "uollet-cb0b4",
