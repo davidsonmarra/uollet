@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { VictoryLine, VictoryChart, VictoryTheme } from "victory-native";
 import { useTheme } from 'styled-components';
 import { ActivityIndicator } from 'react-native';
+import SelectedInterval from '../../components/Forms/SelectedInterval';
 import ButtonCriptoCard from '../../components/ButtonCriptoCard';
 import {
   Container,
@@ -13,6 +14,11 @@ import {
   ContainerChartPadding,
   LoadingContainer,
   TransactionList,
+  ModalTime,
+  ContainerModal,
+  ContainerButton,
+  ButtonTime,
+  TextButtonTime
 } from './styles';
 import apiCoinGecko from '../../services/coinGecko';
 import criptos from '../../utils/criptos';
@@ -27,14 +33,23 @@ export default function CriptosInfos({ navigation }) {
   const [selectedCrypto, setSelectedCrypto] = useState({});
   const [dataChart, setDataChart] = useState([]);
   const [isLoading, setIsLoading] = useState(true); 
+  const [interval, setInterval] = useState(7);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   function formattedDataChart(data) {
     const formattedData = data.map((dt) => {
       return (
+        interval === 7 ?
         {
           x: Intl.DateTimeFormat('pt-BR', {
             day: '2-digit',
             month: '2-digit'
+          }).format(dt[0]),
+          y: dt[1]
+        } : 
+        {
+          x: Intl.DateTimeFormat('pt-BR', {
+            day: '2-digit',
           }).format(dt[0]),
           y: dt[1]
         }
@@ -43,7 +58,9 @@ export default function CriptosInfos({ navigation }) {
     return formattedData;
   }
 
-  useEffect(() => { setSelectedCrypto(coins[0]) },[])
+  useEffect(() => { setSelectedCrypto(coins[0]) },[]);
+
+
 
   useEffect(() => {
     if (selectedCrypto === {}) 
@@ -53,7 +70,7 @@ export default function CriptosInfos({ navigation }) {
         params: {
           id: selectedCrypto.id,
           vs_currency: 'brl',
-          days: '7',
+          days: String(interval),
           interval: 'daily'
         }
       }).then(res => {
@@ -63,7 +80,7 @@ export default function CriptosInfos({ navigation }) {
       .catch(err => console.log(err))
     }
     fetchDataChart();
-  }, [selectedCrypto])
+  }, [selectedCrypto, interval])
 
   return (
     <Container>
@@ -81,12 +98,13 @@ export default function CriptosInfos({ navigation }) {
               }</TitleText>
             </Title> 
           }
+          <SelectedInterval interval={interval} setIsModalVisible={setIsModalVisible} />
           {
             !isLoading ?
             <ContainerChartPadding>
               <VictoryChart
                 height={350}
-                width={350}
+                width={400}
                 theme={VictoryTheme.material}
               > 
                 <VictoryLine
@@ -123,6 +141,40 @@ export default function CriptosInfos({ navigation }) {
               />}
             />  
           }
+          <ModalTime
+          isVisible={isModalVisible}
+          onBackdropPress={() => setIsModalVisible(false)}
+          scrollOffset={500}
+          >
+            {
+              <ContainerModal>
+                <ContainerButton onPress={() => {
+                  interval != 7 && setInterval(7);
+                  setIsModalVisible(false);
+                }}>
+                  <ButtonTime>
+                    <TextButtonTime>7 dias</TextButtonTime>
+                  </ButtonTime>
+                </ContainerButton>
+                <ContainerButton onPress={() => {
+                  interval != 14 && setInterval(14);
+                  setIsModalVisible(false);
+                }}>
+                  <ButtonTime>
+                    <TextButtonTime>14 dias</TextButtonTime>
+                  </ButtonTime>
+                </ContainerButton>
+                <ContainerButton onPress={() => {
+                  interval != 30 && setInterval(30);
+                  setIsModalVisible(false);
+                }}>
+                  <ButtonTime>
+                    <TextButtonTime>30 dias</TextButtonTime>
+                  </ButtonTime>
+                </ContainerButton>
+              </ContainerModal>
+            }
+          </ModalTime>
         </ContainerList>
       </Container>
   );

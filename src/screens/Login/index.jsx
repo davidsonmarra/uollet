@@ -34,7 +34,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ActivityIndicator, Platform, Alert } from 'react-native';
 import apiCoinGecko from '../../services/coinGecko';
 import criptos from '../../utils/criptos';
-import { signInWithGoogleAsync } from '../../utils/googleLogin';
+import { signInWithGoogleAsync } from '../../services/googleLogin';
+import { signInWithApple } from '../../services/appleLogin';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const schema = Yup.object().shape({
   email: Yup
@@ -74,6 +76,30 @@ export default function Login() {
   }, [isLogged])
 //===================================================================================
   // LOGINS
+  async function handleSignInWithApple() {
+    setIsLoading(true);
+    try {
+      let userLogin = await signInWithApple();
+      console.log(userLogin.email)
+      if(!userLogin.email) {
+        const userLogged = await AsyncStorage.getItem(`@uollet:${String(userLogin.id)}`); 
+        userLogin = JSON.parse(userLogged);
+      }      
+      dispatch({ type: 'USER_LOGIN', payload: userLogin });
+      dispatch({ type: 'LOGIN' });
+      Toast.show({
+        type: 'success',
+        text1: 'Login efetuado!',
+        text2: 'O login foi efetuado com sucesso ✔',
+        position: 'bottom',
+      });
+      return true;
+    } catch (err) {
+      console.log(err);
+      Alert.alert("Não foi possível conectar a conta Apple");
+      setIsLoading(false);
+    }
+  }
 
   async function handleSignInWithGoogle() {
     setIsLoading(true);
@@ -99,6 +125,7 @@ export default function Login() {
     } catch (err) {
       console.log(err);
       Alert.alert("Não foi possível conectar a conta Google");
+      setIsLoading(false);
     }
     
   }
@@ -170,7 +197,7 @@ export default function Login() {
       reset();
       navigation.navigate('AppRoutes');
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log(err));
   }
 
   return (
@@ -249,7 +276,7 @@ export default function Login() {
             {
               Platform.OS === 'ios' &&
               <ButtonContainer>
-                <SocialButton  >
+                <SocialButton  onPress={() => handleSignInWithApple()} >
                   <AppleSvg width={50} height={50} />
                 </SocialButton>
               </ButtonContainer>
