@@ -48,7 +48,8 @@ const schema = Yup.object().shape({
   .min(6, 'Minimo de 6 caracteres')
   .matches(/[A-Z]/, 'Pelo menos um caractere maiúsculo')
   .matches(/[0-9]/, 'Pelo menos um número')
-  .matches(/[!-.]|[:-@]|[[-`]|[{-~]/, 'Pelo menos um caractere especial'),
+  .matches(/[!-.]|[:-@]|[[-`]|[{-~]/, 'Pelo menos um caractere especial')
+  .required('Obrigatório ter um e-mail')
 });
 
 export default function Login() {

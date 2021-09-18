@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { VictoryLine, VictoryChart, VictoryTheme } from "victory-native";
+import { VictoryLine, VictoryChart, VictoryTheme, VictoryLabel, VictoryAxis } from "victory-native";
 import { useTheme } from 'styled-components';
 import { ActivityIndicator } from 'react-native';
 import SelectedInterval from '../../components/Forms/SelectedInterval';
@@ -104,9 +104,13 @@ export default function CriptosInfos({ navigation }) {
             <ContainerChartPadding>
               <VictoryChart
                 height={350}
-                width={400}
+                width={420}
                 theme={VictoryTheme.material}
               > 
+                <VictoryAxis independentAxis 
+                  style={{ tickLabels: { angle: interval === 30 ? -90 : -60 } }}
+                />
+                 <VictoryAxis dependentAxis />
                 <VictoryLine
                   style={{
                     data: { 

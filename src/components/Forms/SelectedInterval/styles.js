@@ -9,7 +9,7 @@ export const Container = styled.View`
   align-items: flex-end;
   border-radius: 8px;
   padding: 0 50px;
-  margin-top: 8px;
+  margin: 15px 0 15px;
 `;
 
 export const ButtonContainer = styled.View`
