@@ -1,5 +1,4 @@
 import 'react-native-gesture-handler';
-import { StatusBar } from 'expo-status-bar';
 import 'intl';
 import 'intl/locale-data/jsonp/pt-BR';
 import AppLoading from 'expo-app-loading';
@@ -11,10 +10,7 @@ import {
   Poppins_700Bold
 } from '@expo-google-fonts/poppins'
 import theme from './src/global/styles/theme';
-import React, { useEffect } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import AppRoutes from './src/routes/app.routes';
-import PublicRoutes from './src/routes/public.routes';
+import React from 'react';
 import Routes from './src/routes';
 
 export default function App() {

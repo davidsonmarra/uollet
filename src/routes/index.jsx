@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import PublicRoutes from './public.routes';
-import AppRoutes from './app.routes';
 import criptosReducer from '../reducers/criptosReducer';
 import selectedCriptoReducer from '../reducers/selectedCriptoReducer';
 import transactionsReducer from '../reducers/transactionsReducer';
@@ -9,7 +8,7 @@ import isLoggedReducer from '../reducers/isLoggedReducer';
 import userReducer from '../reducers/userReducer';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
-import Toast, { BaseToast } from 'react-native-toast-message';
+import Toast from 'react-native-toast-message';
 
 // import { useAuth } from '../hooks/auth'
 

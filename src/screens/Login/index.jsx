@@ -37,6 +37,8 @@ import criptos from '../../utils/criptos';
 import { signInWithGoogleAsync } from '../../services/googleLogin';
 import { signInWithApple } from '../../services/appleLogin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StatusBar } from 'expo-status-bar'
+
 
 const schema = Yup.object().shape({
   email: Yup
@@ -49,7 +51,7 @@ const schema = Yup.object().shape({
   .matches(/[A-Z]/, 'Pelo menos um caractere maiúsculo')
   .matches(/[0-9]/, 'Pelo menos um número')
   .matches(/[!-.]|[:-@]|[[-`]|[{-~]/, 'Pelo menos um caractere especial')
-  .required('Obrigatório ter um e-mail')
+  .required('Obrigatório ter uma senha')
 });
 
 export default function Login() {
@@ -167,6 +169,7 @@ export default function Login() {
         text2: `Usuário ou senha incorretos! ❌`,
         position: 'bottom',
       });
+      setIsLoading(false);
       return false;
     });
   }
@@ -204,6 +207,7 @@ export default function Login() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
+        <StatusBar barStyle="light-content"/>
         <Header>
           <Logo width={200} height={200} />
         </Header>

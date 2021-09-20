@@ -17,6 +17,7 @@ import {
 } from './styles';
 import { useSelector, useDispatch } from 'react-redux';
 import Toast from 'react-native-toast-message';
+import { StatusBar } from 'react-native';
 
 
 export default function Home({ navigation }) {
@@ -26,8 +27,8 @@ export default function Home({ navigation }) {
   const [sell, setSell] = useState(0);
   const [purchases, setPurchases] = useState(0);
   const isLogged = useSelector((state) => state.isLogged);
-  const user = useSelector((state) => state.user);
-
+  const user = useSelector((state) => state.user)  
+  const [type, setType] = useState('total');
   const dispatch = useDispatch();
   const theme = useTheme();
 
@@ -93,6 +94,7 @@ export default function Home({ navigation }) {
   return (
     <Container>
         <>
+          <StatusBar barStyle="light-content"/>
           <Header>
             <Wellcome>
               <PhotoContainer><Photo source={{ uri: user.avatar }}/></PhotoContainer>
@@ -113,28 +115,35 @@ export default function Home({ navigation }) {
                 style: 'currency',
                 currency: 'BRL'
               })}
+              isActive={'total' === type}
+              setType={setType}
             />
             <TransactionsCard 
               financial={financial}
-              type="purchases"
+              type="purchase"
               icon="trending-down"  
               amount={purchases.toLocaleString('pt-BR', {
                 style: 'currency',
                 currency: 'BRL'
               })} 
+              isActive={'purchase' === type}
+              setType={setType}
             />
               <TransactionsCard 
                 financial={financial}
-                type="sales"
+                type="sell"
                 icon="trending-up" 
                 amount={sell.toLocaleString('pt-BR', {
                   style: 'currency',
                   currency: 'BRL'
                 })}
+                isActive={'sell' === type}
+                setType={setType}
               />
           </ContainerUserTransactions>
           <TransactionList 
-            data={transactions}
+            data={type === 'total' ? transactions : 
+            transactions.filter(transaction => transaction.type === type)}
             showsVerticalScrollIndicator={false}
             renderItem={({ item }) => <SingleTransactionCard item={item} />}
             keyExtractor={(item) => item.priceCrypto}

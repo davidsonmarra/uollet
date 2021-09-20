@@ -11,14 +11,14 @@ import {
 
 const text = {
   total: 'Financeiro',
-  purchases: 'Compras',
-  sales: 'Vendas'
+  purchase: 'Compras',
+  sell: 'Vendas'
 }
 
-export default function TransactionsCard({ type, icon, amount, financial }) {
+export default function TransactionsCard({ type, icon, amount, financial, setType, isActive }) {
   return (
-    <Background>
-      <Container>
+    <Background onPress={() => setType(type)} activeOpacity={0.3}>
+      <Container isActive={isActive}>
         <HeaderTransaction>
           <Type>{text[type]}</Type>
           {type === 'total' ? 
