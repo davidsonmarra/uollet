@@ -19,9 +19,7 @@ import {
 } from './styles';
 import { useSelector, useDispatch } from 'react-redux';
 import ListCripto from '../../components/ListCripto';
-import { useNavigation, useFocusEffect } from '@react-navigation/native'
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 export default function Transactions() {
   const [selectTypeButton, setSelectTypeButton] = useState('');
@@ -39,15 +37,6 @@ export default function Transactions() {
   const transactions = useSelector((state) => state.transactions);
   const dispatch = useDispatch();
   const navigation = useNavigation();
-
-  // useFocusEffect(() => {
-  
-  //   async function resetStorage() {
-  //     await AsyncStorage.clear();
-  //     console.log("Apagado")
-  //   }
-  //   resetStorage();
-  // })
 
   function resetForm() {
     setSelectedCrypto({
@@ -149,8 +138,12 @@ export default function Transactions() {
               placeholderTextColor='#FFFFFF88'
               autoCorrect={false}
               keyboardType="numeric"
+              prefix="R$"
+              delimiter="."
+              separator=","
+              precision={2}
               value={price}
-              onChangeText={setPrice}
+              onChangeValue={setPrice}
             />
             <Input 
               name="criptoPrice"
@@ -160,7 +153,7 @@ export default function Transactions() {
               keyboardType="numeric"
               editable={false} 
               selectTextOnFocus={false}
-              value={criptoPrice}
+              value={selectedCrypto.symbol ? `${criptoPrice} ${selectedCrypto.symbol}` : criptoPrice}
               
             />
           </Fields>
