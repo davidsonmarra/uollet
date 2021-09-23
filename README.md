@@ -17,7 +17,7 @@ Este é meu primeiro projeto pessoal nessa tecnologia, e sua proposta é simular
 <p><strong>Pretendo usar as seguintes ferramentas:</strog></p>
 <ul>
   <li>Styled-Components: para a estilização dos componentes</li>
-  <li>React Navigation: para criar a nevegação entre as telas</li>
+  <li>React Navigation: para criar a navegação entre as telas</li>
   <li>Axios: para a realização de chamadas de API</li>
   <li>React Native Gesture Handler: para criar botões com efeitos nativos no app</li>
   <li>React Responsive Font Size: para criar layouts responsivos</li>
