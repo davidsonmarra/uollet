@@ -90,12 +90,7 @@ export default function Login() {
       }      
       dispatch({ type: 'USER_LOGIN', payload: userLogin });
       dispatch({ type: 'LOGIN' });
-      Toast.show({
-        type: 'success',
-        text1: 'Login efetuado!',
-        text2: 'O login foi efetuado com sucesso ✔',
-        position: 'bottom',
-      });
+      
       return true;
     } catch (err) {
       console.log(err);
@@ -118,12 +113,7 @@ export default function Login() {
       }
       dispatch({ type: 'USER_LOGIN', payload: currentUser });
       dispatch({ type: 'LOGIN' });
-      Toast.show({
-        type: 'success',
-        text1: 'Login efetuado!',
-        text2: 'O login foi efetuado com sucesso ✔',
-        position: 'bottom',
-      });
+    
       return true;
     } catch (err) {
       console.log(err);
@@ -133,7 +123,7 @@ export default function Login() {
     
   }
 
-  useEffect(() => { console.log(user)}, [user])
+  // useEffect(() => { console.log(user)}, [user])
 
 
   async function loginUser(data) {
@@ -151,12 +141,7 @@ export default function Login() {
       }
       dispatch({ type: 'USER_LOGIN', payload: currentUser });
       dispatch({ type: 'LOGIN' });
-      Toast.show({
-        type: 'success',
-        text1: 'Login efetuado!',
-        text2: 'O login foi efetuado com sucesso ✔',
-        position: 'bottom',
-      });
+      
       return true;
     })
     .catch((error) => {
@@ -199,6 +184,12 @@ export default function Login() {
       dispatch({type: 'SET_INFOS', payload: res.data})
       setIsLoading(false);
       reset();
+      Toast.show({
+        type: 'success',
+        text1: 'Login efetuado!',
+        text2: 'O login foi efetuado com sucesso ✔',
+        position: 'bottom',
+      });
       navigation.navigate('AppRoutes');
     })
     .catch(err => console.log(err));

@@ -94,9 +94,6 @@ export default function Register({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
-        {/* <Header>
-          <Title>Cadastre uma nova conta aqui!</Title>
-        </Header> */}
         <Form>
           <Input
             control={control}

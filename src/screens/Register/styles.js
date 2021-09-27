@@ -10,7 +10,11 @@ export const Container = styled.View`
   padding: 50px 25px 30px;
 `;
 
-export const Header = styled.View``;
+export const Header = styled.View`
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+`;
 
 export const Title = styled.Text`
   font-size: ${RFValue(16)}px;
