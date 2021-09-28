@@ -25,9 +25,11 @@ export const Icon = styled.Image`
   border-radius: ${RFPercentage(50)}px;
 `;
 
-export const Title = styled.Text`
+export const Title = styled.Text.attrs({
+  numberOfLines: 1
+})`
   color: ${({ theme }) => theme.colors.title};
   font-size: ${RFValue(16)}px;
   font-family: ${({ theme }) => theme.fonts.medium};
-
+  width: ${RFValue(150)}px;text-align: center
 `;

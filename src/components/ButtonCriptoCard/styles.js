@@ -24,9 +24,12 @@ export const PhotoCoin = styled.Image`
   border-radius: ${RFPercentage(50)}px;
 `;
 
-export const Title = styled.Text`
+export const Title = styled.Text.attrs({
+  numberOfLines: 1
+})`
   color: ${({ theme }) => theme.colors.title};
   font-family: ${({ theme }) => theme.fonts.medium};
+  width: ${RFValue(100)}px;
 `;
 
 export const PriceContainer = styled.View`

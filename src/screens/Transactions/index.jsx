@@ -30,7 +30,7 @@ export default function Transactions() {
   const coins = useSelector((state) => state.criptos);
   const [selectedCrypto, setSelectedCrypto] = useState({
     image: 'https://www.iconpacks.net/icons/2/free-dollar-coin-icon-2149-thumb.png',
-    id: 'Moeda',
+    symbol: 'Moeda',
     current_price: 'Preço Atual'
   });
 
@@ -41,7 +41,7 @@ export default function Transactions() {
   function resetForm() {
     setSelectedCrypto({
       image: 'https://www.iconpacks.net/icons/2/free-dollar-coin-icon-2149-thumb.png',
-      id: 'Moeda',
+      symbol: 'Moeda',
       current_price: 'Preço Atual'
     });
     setPrice('');
@@ -92,7 +92,11 @@ export default function Transactions() {
     if(String(selectedCrypto.current_price) !== 'undefined' && 
     (String(Number(price) / selectedCrypto.current_price)) !== 'Infinity' &&
     (String(Number(price) / selectedCrypto.current_price)) !== 'NaN')
-      setCriptoPrice(String((Number(price) / selectedCrypto.current_price).toFixed(8)));
+      setCriptoPrice(String(
+        (Number(price) / selectedCrypto.current_price) >= 1 ?
+        (Number(price) / selectedCrypto.current_price).toFixed(3) :
+        (Number(price) / selectedCrypto.current_price).toFixed(8)
+      ));
     setIsModalVisible(false);
   }, [selectedCrypto]);
 
@@ -105,7 +109,11 @@ export default function Transactions() {
     if(String(selectedCrypto.current_price) !== 'undefined' && 
     (String(Number(price) / selectedCrypto.current_price)) !== 'Infinity' &&
     (String(Number(price) / selectedCrypto.current_price)) !== 'NaN')
-      setCriptoPrice(String((Number(price) / selectedCrypto.current_price).toFixed(8)));
+      setCriptoPrice(String(
+        (Number(price) / selectedCrypto.current_price) >= 1 ?
+        (Number(price) / selectedCrypto.current_price).toFixed(3) :
+        (Number(price) / selectedCrypto.current_price).toFixed(8)
+      ));
   }, [price])
 
   return (
@@ -172,6 +180,7 @@ export default function Transactions() {
             <ContainerModal>
             <ListCoins 
               data={coins}
+              showsVerticalScrollIndicator={false}
               renderItem={({ item }) => 
                 <ListCripto setSelectedCrypto={setSelectedCrypto} item={item}/>
               }

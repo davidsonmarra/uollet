@@ -32,7 +32,10 @@ export const Img = styled.Image`
   border-radius: ${RFPercentage(50)}px;
 `;
 
-export const Title = styled.Text`
+export const Title = styled.Text.attrs({
+  numberOfLines: 1
+})`
+  width: ${RFValue(220)}px;
   color: ${({ theme }) => theme.colors.title};
   font-size: ${RFValue(20)}px;
   font-family: ${({ theme }) => theme.fonts.medium};

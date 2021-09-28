@@ -11,7 +11,7 @@ export default function ListCripto({ item, setSelectedCrypto, ...rest }) {
     <Container {...rest} onPress={() => setSelectedCrypto(item)} activeOpacity={1}>
       <Button {...rest} >
         <Icon source={{ uri: item.image }} />
-        <Title>{item.id}</Title>
+        <Title>{item.name}</Title>
       </Button>
     </Container>
   );

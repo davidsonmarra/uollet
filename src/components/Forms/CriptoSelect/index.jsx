@@ -12,7 +12,7 @@ export default function CriptoSelect({ coin, setIsModalVisible }) {
     <Container >
       <Button onPress={() => setIsModalVisible(true)}>
         <Img source={{ uri: coin.image }} />
-        <Title>{coin.id}</Title>
+        <Title>{coin.symbol}</Title>
         <Icon name="chevron-down"/>
       </Button>
     </Container>
