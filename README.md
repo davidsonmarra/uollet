@@ -45,3 +45,4 @@ Os end-points usados são:</p>
 </br>
 <p>Todos os objetivos propostos (inclusive os bônus) foram realizados com sucesso, com até algumas coisas a mais, como: variação do intervalo de tempo do gráfico login social e login com autenticação no firebase e filtragem das transações por total, compras ou vendas.</p>
 <p>Segue um vídeo apresentando as telas e algumas das principais funcionalidades do app:</p>
+<div align="center"><img width="200px" height="375px" src="./src/assets/Uollet-Video.gif"></div>
