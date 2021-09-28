@@ -38,6 +38,7 @@ export default function CriptosInfos({ navigation }) {
 
   function formattedDataChart(data) {
     const formattedData = data.map((dt) => {
+     
       return (
         interval === 7 ?
         {
@@ -104,13 +105,13 @@ export default function CriptosInfos({ navigation }) {
             <ContainerChartPadding>
               <VictoryChart
                 height={350}
-                width={420}
+                width={400}
                 theme={VictoryTheme.material}
               > 
                 <VictoryAxis independentAxis 
                   style={{ tickLabels: { angle: interval === 30 ? -90 : -60 } }}
                 />
-                 <VictoryAxis dependentAxis />
+                 <VictoryAxis dependentAxis style={{ tickLabels: { padding: 2}}} />
                 <VictoryLine
                   style={{
                     data: { 
