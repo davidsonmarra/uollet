@@ -14,7 +14,7 @@ Este é meu primeiro projeto pessoal nessa tecnologia, e sua proposta é simular
 <p>Como bônus gostaria de acrescentar a possibilidade de compra e venda de criptomoedas, além de adicionar uma forma de login (provavelmente apenas login social com a conta da google ou a conta apple).</p>
 
 <h2>Ferramentas</h2>
-<p><strong>Pretendo usar as seguintes ferramentas:</strog></p>
+<p><strong>Pretendo usar as seguintes ferramentas:</strong></p>
 <ul>
   <li>Styled-Components: para a estilização dos componentes</li>
   <li>React Navigation: para criar a navegação entre as telas</li>
@@ -35,3 +35,13 @@ Os end-points usados são:</p>
   <li><strong>GET/coins/markets</strong>: para retornar informações sobre as criptomoedas</li>
   <li><strong>GET/coins/{id}/market_chart</strong>: para pegar informações sobre uma única cripto para plotar seu gráfico</li>
 </ul>
+
+<h2>Resultados</h2>
+</br>
+<div align="center">
+  <img width="200px" height="375px" src="./src/assets/Login-iOS.jpg">
+  <img width="200px" height="375px" src="./src/assets/Login-Android.png">
+</div>
+</br>
+<p>Todos os objetivos propostos (inclusive os bônus) foram realizados com sucesso, com até algumas coisas a mais, como: variação do intervalo de tempo do gráfico login social e login com autenticação no firebase e filtragem das transações por total, compras ou vendas.</p>
+<p>Segue um vídeo apresentando as telas e algumas das principais funcionalidades do app:</p>
