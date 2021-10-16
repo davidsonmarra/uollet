@@ -22,7 +22,6 @@ export default function Routes() {
   });
   const store = createStore(allReducers);
   
-  // const { user } = useAuth();
   return (
     <Provider store={store}>
     <NavigationContainer>

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import TransactionsCard from '../../components/TransactionsCard';
 import SingleTransactionCard from '../../components/SingleTransactionCard';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useTheme } from 'styled-components';
 import {
   Container,
   Header,
@@ -22,15 +21,12 @@ import { StatusBar } from 'react-native';
 
 export default function Home({ navigation }) {
   const transactions = useSelector((state) => state.transactions);
-  const coins = useSelector((state) => state.criptos);
   const [financial, setFinancial] = useState(0);
   const [sell, setSell] = useState(0);
   const [purchases, setPurchases] = useState(0);
-  const isLogged = useSelector((state) => state.isLogged);
   const user = useSelector((state) => state.user)  
   const [type, setType] = useState('total');
   const dispatch = useDispatch();
-  const theme = useTheme();
 
   const KEY = `@uollet:transactions_${String(user.id)}`;
 
@@ -60,11 +56,9 @@ export default function Home({ navigation }) {
 
   useEffect(() => {
     async function getTransactions() {
-      // await AsyncStorage.clear();
       try {
         console.log("ID: ", String(user.id));
         const value = await AsyncStorage.getItem(KEY);
-        // console.log("VALUE: ", value)
         if(value !== null) {
           dispatch({ type: 'GET_TRANSACTION_INITIAL', payload: JSON.parse(value)})
         }
@@ -149,7 +143,6 @@ export default function Home({ navigation }) {
             keyExtractor={(item) => item.priceCrypto}
           />
         </>
-      
     </Container>
   );
 }

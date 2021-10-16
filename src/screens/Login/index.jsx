@@ -23,7 +23,6 @@ import {
   SocialButtonsContainer,
   SocialButton
 } from './styles';
-import { useFocusEffect } from '@react-navigation/core';
 import { useNavigation } from '@react-navigation/native';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
@@ -68,8 +67,6 @@ export default function Login() {
   
   const dispatch = useDispatch();
   const isLogged = useSelector((state) => state.isLogged);
-  const transactions = useSelector((state) => state.transactions);
-  const coins = useSelector((state) => state.criptos);
   const user = useSelector((state) => state.user);
   
   useEffect(() => {
@@ -77,8 +74,7 @@ export default function Login() {
       fetchData();
     }
   }, [isLogged])
-//===================================================================================
-  // LOGINS
+
   async function handleSignInWithApple() {
     setIsLoading(true);
     try {
@@ -123,13 +119,10 @@ export default function Login() {
     
   }
 
-  // useEffect(() => { console.log(user)}, [user])
-
-
   async function loginUser(data) {
     await firebase.auth().signInWithEmailAndPassword(data.email, data.password)
     .then((userCredential) => {
-      // Signed in
+
       let user = userCredential.user;
       
       const currentUser = {
@@ -145,9 +138,6 @@ export default function Login() {
       return true;
     })
     .catch((error) => {
-      let errorCode = error.code;
-      let errorMessage = error.message;
-      console.log(errorMessage);
       Toast.show({
         type: 'error',
         text1: 'Algo deu errado!',
@@ -172,8 +162,7 @@ export default function Login() {
   provider.setCustomParameters({
     'login_hint': 'user@example.com'
   });
-//================================================================================================================================
-  // CRIPTOS INFO
+
   async function fetchData() {
     await apiCoinGecko.get('/coins/markets/', {
       params: {

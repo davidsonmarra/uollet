@@ -14,12 +14,14 @@ export const Button = styled(RectButton)`
   justify-content: center;
   align-items: center;
   padding: 18px;
-  background-color: ${({ theme, type, isSelectted }) => 
-  isSelectted && type === 'sell' ? 
-  theme.colors.green : 
-  isSelectted && type === 'purchase' ?
-  theme.colors.red :
-  '#FFFFFF11'};
+  background-color: ${
+    ({ theme, type, isSelectted }) => 
+    isSelectted && type === 'sell' ? 
+    theme.colors.green : 
+    isSelectted && type === 'purchase' ?
+    theme.colors.red :
+    '#FFFFFF11'
+  };
   border-radius: 8px;
 
 `

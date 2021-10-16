@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { VictoryLine, VictoryChart, VictoryTheme, VictoryLabel, VictoryAxis } from "victory-native";
+import { VictoryLine, VictoryChart, VictoryTheme, VictoryAxis } from "victory-native";
 import { useTheme } from 'styled-components';
 import { ActivityIndicator } from 'react-native';
 import SelectedInterval from '../../components/Forms/SelectedInterval';
@@ -21,14 +21,11 @@ import {
   TextButtonTime
 } from './styles';
 import apiCoinGecko from '../../services/coinGecko';
-import criptos from '../../utils/criptos';
 import { useSelector, useDispatch } from 'react-redux';
 
-export default function CriptosInfos({ navigation }) {
+export default function CriptosInfos() {
   const theme = useTheme();
-  // const [coins, setCoins] = useState([]);
   const coins = useSelector((state) => state.criptos);
-  const dispatch = useDispatch();
 
   const [selectedCrypto, setSelectedCrypto] = useState({});
   const [dataChart, setDataChart] = useState([]);
@@ -60,8 +57,6 @@ export default function CriptosInfos({ navigation }) {
   }
 
   useEffect(() => { setSelectedCrypto(coins[0]) },[]);
-
-
 
   useEffect(() => {
     if (selectedCrypto === {}) 
